@@ -3,7 +3,7 @@
  * @Date: 2020-04-12 13:48:44
  * @Github: https://github.com/ShepherdQR
  * @LastEditors: Shepherd Qirong
- * @LastEditTime: 2020-04-12 14:38:00
+ * @LastEditTime: 2020-04-13 02:29:00
  * @Copyright (c) 2019--20xx Shepherd Qirong. All rights reserved.
  -->
 
@@ -11,7 +11,13 @@
 I decide to backup the source codes of the paper here.
 
 
-
+### day02 2020-04-13 02:28:44
+git init
+git reomte add origin git@github.com:ShepherdQR/PaperSourceCodesBackup.git
+get pull origin master
+git add .
+git commit -m 'day02'
+git push -u origin master
 
 
 ### day01 upload to a new repository
