@@ -3,7 +3,7 @@
 //  * Date: 2020-04-10 17:36:56
 //  * Github: https://github.com/ShepherdQR
 //  * LastEditors: Shepherd Qirong
-//  * LastEditTime: 2020-04-13 02:25:25
+//  * LastEditTime: 2020-04-15 01:31:21
 //  * Copyright (c) 2019--20xx Shepherd Qirong. All rights reserved.
 */
 
@@ -44,12 +44,20 @@ using namespace std;
 string fileName = "/home/jellyfish/cpps/FinalPaperSourceCodes/AutoScanProject-20200324";
 string scanFiles = fileName +"/scanFiles/";
 string mode = "Linear";
+int usingCameraList[]={3,2,1,0};
 string cameraList[4]={"00SL", "01TL", "02TR", "03SR"};
+float cameraLocation[4][6]={{0.0, -M_PI_2, 0.0, -2.9, 0.0, 1.03},
+                            {0.0, 0.0, 0.0, -0.6, 0.0, 3.1},
+                            {0.0, 0.0, 0.0, 0.6, 0.0, 3.1},
+                            {0.0, M_PI_2, 0.0, 2.9, 0.0, 1.03}};
+float cameraColor[4][3]={{1,0,0}, {0,1,0}, {0,0,1}, {1,0,1}};
+
 //int direction[4] = {};
 float speed = 0.1;//  m/s
-int slides = 30;// slides
+int slides = 80;// slides
 
 bool savePcd = true;
+//bool savePcd = false;
 // camera
 float halfAngle = 27.8; // degree
 int cameraPointsNumber = 60;
@@ -63,8 +71,10 @@ string currentScanPcd(const int cameraNum, const int i){
     return  scanFileOut;
 }
 
-void BoundaryAndResolution(const pcl::PointCloud<pcl::PointXYZ>::Ptr cloudIn, float pMax, float pMin, float rMax, float rMin);
+//void BoundaryAndResolution(const pcl::PointCloud<pcl::PointXYZ>::Ptr cloudIn, float pMax, float pMin, float rMax, float rMin);
 //float pMax, pMin, rMax, rMin; BoundaryAndResolution(cloudCur, pMax, pMin, rMax, rMin);
+
+void transformAngleAxis( pcl::PointCloud<pcl::PointXYZ>::Ptr cloudIn, pcl::PointCloud<pcl::PointXYZ>::Ptr cloudOut, float matrixIn[]);//, int matrixSize = 6
 
 
 int main(int argc, char **argv){
@@ -103,7 +113,13 @@ int main(int argc, char **argv){
     viewer2.setBackgroundColor(255, 255, 255);
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloudAllOri(new pcl::PointCloud<pcl::PointXYZ>),cloudAllVox(new pcl::PointCloud<pcl::PointXYZ>);
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloudAllOritrans(new pcl::PointCloud<pcl::PointXYZ>),cloudAllVoxtrans(new pcl::PointCloud<pcl::PointXYZ>);
 
+    // for(size_t ic = 0; ic< 4; ++ic)
+    //     for(size_t jc = 0; jc< 3; ++jc){
+    //         cameraLocation[ic][jc] *= -1.0;
+    //     }
+            
     timeTemp = time.toc();
     time.tic();
     timeTotal += timeTemp;
@@ -112,11 +128,11 @@ int main(int argc, char **argv){
 
 
     // 2  pcd load and combination ... 
-    int usingCameraList[]={3};
+    
     int cameraNumber = sizeof(usingCameraList)/sizeof(usingCameraList[0]);  //number of cameras
 
     for(size_t j=0; j<cameraNumber; ++j){
-        pcl::PointCloud<pcl::PointXYZ>::Ptr cloudAll01(new pcl::PointCloud<pcl::PointXYZ>);
+        pcl::PointCloud<pcl::PointXYZ>::Ptr cloudAll01(new pcl::PointCloud<pcl::PointXYZ>), cloudAll01trans(new pcl::PointCloud<pcl::PointXYZ>);
         vector<vector<float> > edgeResolution(5, vector<float> (slides, 0.0));// pNum, pMax, pMin, rMax, rMin;
         for(size_t i=0; i<slides ; ++i){
 
@@ -125,9 +141,13 @@ int main(int argc, char **argv){
             string loadPcdFIle = FileFolderName + "/Scan" + cameraList[usingCameraList[j]] + "/" + currentScanPcd(usingCameraList[j], i);
             pcl::io::loadPCDFile(loadPcdFIle, *cloudCur);
 
-            Eigen::Affine3f transformY = Eigen::Affine3f::Identity();
-            transformY.translation() << 0.0, speed * (slides-1-i), 0.0;
-            pcl::transformPointCloud (*cloudCur, *cloudCur, transformY);
+
+            float matrixCurIn[6]= { 0.0, 0.0, 0.0, 0.0, -1*speed*i, 0.0 };//speed * (slides-1-i)
+            transformAngleAxis(cloudCur, cloudCur, matrixCurIn);
+
+            // Eigen::Affine3f transformY = Eigen::Affine3f::Identity();
+            // transformY.translation() << 0.0, speed * (slides-1-i), 0.0;
+            // pcl::transformPointCloud (*cloudCur, *cloudCur, transformY);
 
 
             // 2.2  number, boundary, resolution of the raw pcd...
@@ -148,22 +168,25 @@ int main(int argc, char **argv){
             edgeResolution[3][i]=rMax;
             edgeResolution[4][i]=rMin;
 
-            
-            // 2.3  combination1 and display of the raw pcd...
-            *cloudAll01 = *cloudAll01 + *cloudCur;
-            if(i ==0){
-                viewer1.addPointCloud(cloudAll01 , cameraList[usingCameraList[j]].c_str());
-                viewer1.setPointCloudRenderingProperties( pcl::visualization::RenderingProperties::PCL_VISUALIZER_POINT_SIZE, 5, cameraList[usingCameraList[j]].c_str() );
-                viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_COLOR,1,0,0, cameraList[usingCameraList[j]].c_str());
-            }
-            else{
-                viewer1.updatePointCloud(cloudAll01 , cameraList[usingCameraList[j]].c_str());
-                //cout << cloudAll01->size() << endl;
-            }  
+            *cloudAll01 = *cloudAll01 + *cloudCur;//disp11
         }
         if(savePcd == true) pcl::io::savePCDFile (scanCloudPath+ "/Ori-" + cameraList[usingCameraList[j]] + ".pcd", *cloudAll01);
         *cloudAllOri = *cloudAllOri + *cloudAll01;
+
+
+        // 2.3 translation and display
+        float matrixCurIn2[6]={0};
+            for(size_t im = 0; im< 6; ++im){
+                matrixCurIn2[im]= cameraLocation[usingCameraList[j]][im];
+            }       
+        transformAngleAxis(cloudAll01, cloudAll01trans, matrixCurIn2);
         
+        if(savePcd == true) pcl::io::savePCDFile (scanCloudPath+ "/Ori-trans" + cameraList[usingCameraList[j]] + ".pcd", *cloudAll01trans);
+        *cloudAllOritrans = *cloudAllOritrans + *cloudAll01trans;
+   
+        viewer1.addPointCloud(cloudAll01trans , cameraList[usingCameraList[j]].c_str());
+        viewer1.setPointCloudRenderingProperties( pcl::visualization::RenderingProperties::PCL_VISUALIZER_POINT_SIZE, 5, cameraList[usingCameraList[j]].c_str() );
+        viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_COLOR, cameraColor[usingCameraList[j]][0], cameraColor[usingCameraList[j]][1], cameraColor[usingCameraList[j]][2], cameraList[usingCameraList[j]].c_str());
 
 
 
@@ -192,7 +215,7 @@ int main(int argc, char **argv){
 
         
         // 2.5.1  make vox pcd---01
-        pcl::PointCloud<pcl::PointXYZ>::Ptr cloudVox01(new pcl::PointCloud<pcl::PointXYZ>);
+        pcl::PointCloud<pcl::PointXYZ>::Ptr cloudVox01(new pcl::PointCloud<pcl::PointXYZ>), cloudVox01trans(new pcl::PointCloud<pcl::PointXYZ>);
         cloudVox01->width = slides;
         cloudVox01->height = cameraPointsNumber;
         cloudVox01->points.resize(cloudVox01->width * cloudVox01->height);
@@ -200,7 +223,7 @@ int main(int argc, char **argv){
         for(size_t i = 0; i< slides; ++i){
             for(size_t ii = 0; ii< cameraPointsNumber; ++ii){
                 cloudVox01->at(i,ii).x = xList[ii];
-                cloudVox01->at(i,ii).y = speed * (slides-1-i);
+                cloudVox01->at(i,ii).y = -1*speed*i;//speed * (slides-1-i)
                 cloudVox01->at(i,ii).z = 0.0;
             }
         }//cout << cloudVox01->at(3, 6).y << endl;
@@ -218,21 +241,25 @@ int main(int argc, char **argv){
         }
         if(savePcd == true) pcl::io::savePCDFile (scanCloudPath+ "/Vox-" + cameraList[usingCameraList[j]] + ".pcd", *cloudVox01);
 
-        *cloudAllVox = *cloudAllVox + *cloudVox01;
-        viewer2.addPointCloud(cloudVox01 , cameraList[usingCameraList[j]].c_str());
+
+        transformAngleAxis(cloudVox01, cloudVox01trans, matrixCurIn2);
+        if(savePcd == true) pcl::io::savePCDFile (scanCloudPath+ "/Vox-trans-" + cameraList[usingCameraList[j]] + ".pcd", *cloudVox01trans);
+        *cloudAllVoxtrans = *cloudAllVoxtrans + *cloudVox01trans;
+
+        viewer2.addPointCloud(cloudVox01trans , cameraList[usingCameraList[j]].c_str());
         viewer2.setPointCloudRenderingProperties( pcl::visualization::RenderingProperties::PCL_VISUALIZER_POINT_SIZE, 5, cameraList[usingCameraList[j]].c_str() );
-        viewer2.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_COLOR,0,1,0, cameraList[usingCameraList[j]].c_str());
+        viewer2.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_COLOR,cameraColor[usingCameraList[j]][0], cameraColor[usingCameraList[j]][1], cameraColor[usingCameraList[j]][2], cameraList[usingCameraList[j]].c_str());
     }
 
 
     if(savePcd == true) {
-        pcl::io::savePCDFile (scanCloudPath+ "/Ori-All.pcd", *cloudAllOri);
-        pcl::io::savePCDFile (scanCloudPath+ "/Vox-All.pcd", *cloudAllVox);
+        pcl::io::savePCDFile (scanCloudPath+ "/Ori-All-Trans.pcd", *cloudAllOritrans);
+        pcl::io::savePCDFile (scanCloudPath+ "/Vox-All-Trans.pcd", *cloudAllVoxtrans);
     }
 
 
 
-
+viewer1.addCoordinateSystem();  
     while ((!viewer1.wasStopped()) & (!viewer2.wasStopped()) ){
 		viewer1.spinOnce();
         viewer2.spinOnce();
@@ -247,6 +274,56 @@ int main(int argc, char **argv){
 
 
 
+
+
+void transformAngleAxis( pcl::PointCloud<pcl::PointXYZ>::Ptr cloudIn, pcl::PointCloud<pcl::PointXYZ>::Ptr cloudOut, float matrixIn[]){
+    
+    float xRot(matrixIn[0]), yRot(matrixIn[1]), zRot(matrixIn[2]), xTrans(matrixIn[3]), yTrans(matrixIn[4]), zTrans(matrixIn[5]);
+    
+    Eigen::Affine3f rotateX = Eigen::Affine3f::Identity();
+    rotateX.rotate (Eigen::AngleAxisf (xRot, Eigen::Vector3f::UnitX()));
+    pcl::transformPointCloud (*cloudIn, *cloudOut, rotateX);
+
+    Eigen::Affine3f rotateY = Eigen::Affine3f::Identity();
+    rotateY.rotate (Eigen::AngleAxisf (yRot, Eigen::Vector3f::UnitY()));
+    pcl::transformPointCloud (*cloudOut, *cloudOut, rotateY);
+    
+    Eigen::Affine3f rotateZ = Eigen::Affine3f::Identity();
+    rotateZ.rotate (Eigen::AngleAxisf (zRot, Eigen::Vector3f::UnitZ()));
+    pcl::transformPointCloud (*cloudOut, *cloudOut, rotateZ);
+   
+    Eigen::Affine3f transform1 = Eigen::Affine3f::Identity();
+    transform1.translation() << xTrans, yTrans, zTrans;
+    pcl::transformPointCloud (*cloudOut, *cloudOut, transform1);
+}
+
+
+            
+            
+            
+
+//viewer->addCube(center,rotation,100,100,100);
+       
+
+
+
+
+            //disp11
+            // if(i ==0){
+            //     viewer1.addPointCloud(cloudAll01 , cameraList[usingCameraList[j]].c_str());
+            //     viewer1.setPointCloudRenderingProperties( pcl::visualization::RenderingProperties::PCL_VISUALIZER_POINT_SIZE, 5, cameraList[usingCameraList[j]].c_str() );
+            //     viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_COLOR,1,0,0, cameraList[usingCameraList[j]].c_str());
+            // }
+            // else{
+            //     viewer1.updatePointCloud(cloudAll01 , cameraList[usingCameraList[j]].c_str());
+            //     //cout << cloudAll01->size() << endl;
+            // }  
+
+
+
+
+
+/*
 void BoundaryAndResolution(const pcl::PointCloud<pcl::PointXYZ>::Ptr cloudIn, float pMax, float pMin, float rMax, float rMin){
     pMax = cloudIn->points[0].x;
     pMin = cloudIn->points[cloudIn->size()-1].x;
@@ -261,7 +338,7 @@ void BoundaryAndResolution(const pcl::PointCloud<pcl::PointXYZ>::Ptr cloudIn, fl
         //the "()" cost me about 2 hours to fix!
     }
 }
-
+*/
 
 
 
