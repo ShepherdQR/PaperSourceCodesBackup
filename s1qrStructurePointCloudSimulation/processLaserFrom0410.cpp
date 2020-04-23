@@ -3,24 +3,26 @@
 //  * Date: 2020-04-10 17:36:56
 //  * Github: https://github.com/ShepherdQR
 //  * LastEditors: Shepherd Qirong
-//  * LastEditTime: 2020-04-15 01:31:21
+//  * LastEditTime: 2020-04-24 03:44:05
 //  * Copyright (c) 2019--20xx Shepherd Qirong. All rights reserved.
 */
 
-//  2020-04-10 17:41:54
-/*
+/*//  2020-04-10 17:41:54
     Today I just wanna easily load and relocate the pcds, then I need to practice the opencv 
 */
-//  2020-04-12 15:34:30
-/*
+
+/*//  2020-04-12 15:34:30
     I drop the idea and turn to do vox.
     The dropped idea is to make the pcd in the camera view, TO RECONSTRUCTE each point like 60 in camera. In this way the latties are used to label the point number, if we get x=0, it's easy to count the point order, and write in pcd. Generally we also need to segmente the point range, to label the number.
     Then I thought why not just using the label to vox the point.
 */
 
-//  2020-04-13 02:24:41
-/*
+/*//  2020-04-13 02:24:41
     I finished the vox codes.
+*/
+
+/*//  2020-04-24 03:42:59
+    The vox codes modified a little to supply null cloud, and I clap more clouds.
 */
 
 
@@ -53,14 +55,15 @@ float cameraLocation[4][6]={{0.0, -M_PI_2, 0.0, -2.9, 0.0, 1.03},
 float cameraColor[4][3]={{1,0,0}, {0,1,0}, {0,0,1}, {1,0,1}};
 
 //int direction[4] = {};
-float speed = 0.1;//  m/s
-int slides = 80;// slides
+float speed = 0.01;//  m/s
+int slides = 800;// slides
 
 bool savePcd = true;
 //bool savePcd = false;
+
 // camera
 float halfAngle = 27.8; // degree
-int cameraPointsNumber = 60;
+int cameraPointsNumber = (1920/4);
 float AngleResolution = 2*halfAngle/cameraPointsNumber;
 float maxRadius = 2.125; // metric
 
@@ -134,12 +137,24 @@ int main(int argc, char **argv){
     for(size_t j=0; j<cameraNumber; ++j){
         pcl::PointCloud<pcl::PointXYZ>::Ptr cloudAll01(new pcl::PointCloud<pcl::PointXYZ>), cloudAll01trans(new pcl::PointCloud<pcl::PointXYZ>);
         vector<vector<float> > edgeResolution(5, vector<float> (slides, 0.0));// pNum, pMax, pMin, rMax, rMin;
+
+        int isNullCloud=0;
         for(size_t i=0; i<slides ; ++i){
 
             // 2.1  load the raw pcd...
             pcl::PointCloud<pcl::PointXYZ>::Ptr cloudCur(new pcl::PointCloud<pcl::PointXYZ>);
             string loadPcdFIle = FileFolderName + "/Scan" + cameraList[usingCameraList[j]] + "/" + currentScanPcd(usingCameraList[j], i);
-            pcl::io::loadPCDFile(loadPcdFIle, *cloudCur);
+            if(pcl::io::loadPCDFile(loadPcdFIle, *cloudCur)==-1){
+                cloudCur->width=1;
+                cloudCur->height=1;
+                cloudCur->points.resize(1);
+                cloudCur->points[0].x=0;
+                cloudCur->points[0].y=0;
+                cloudCur->points[0].z=0.35;
+                isNullCloud =1;
+            }
+            
+            
 
 
             float matrixCurIn[6]= { 0.0, 0.0, 0.0, 0.0, -1*speed*i, 0.0 };//speed * (slides-1-i)
@@ -167,6 +182,11 @@ int main(int argc, char **argv){
             edgeResolution[2][i]=pMin;
             edgeResolution[3][i]=rMax;
             edgeResolution[4][i]=rMin;
+            if(isNullCloud ==1){
+                //edgeResolution[0][i]= 0;
+                edgeResolution[4][i]=100;
+                isNullCloud =0;
+            }
 
             *cloudAll01 = *cloudAll01 + *cloudCur;//disp11
         }
@@ -197,12 +217,16 @@ int main(int argc, char **argv){
         float cameraRMax = *max_element(edgeResolution[3].begin(), edgeResolution[3].end());
         float cameraRMin = *min_element(edgeResolution[4].begin(), edgeResolution[4].end());
 
-        cout <<"\n The edgeResolution information:\n" "Numbers, pxMax, pxMin, rxMax, rxMin" << endl;
-        for ( int iqq =0; iqq< slides; ++iqq ){
-        for(int iq =0; iq< 5; ++iq){
-            cout << edgeResolution[iq][iqq]  << ", ";
-        }
-        cout << endl;
+        //
+        cout <<"\n The edgeResolution information:\n" "Slides, TotalNumber, Numbers, pxMax, pxMin, rxMax, rxMin" << endl;
+        int totalNumber(0);
+        for ( int iqq =0; iqq< slides/slides+3 ; ++iqq ){
+            totalNumber +=edgeResolution[0][iqq];
+            cout << iqq << ": " << totalNumber << ", ";
+            for(int iq =0; iq< 5; ++iq){
+                cout << edgeResolution[iq][iqq]  << ", ";
+            }
+            cout << endl;
         }
         cout << "<<, " << cameraPMax << ", " << cameraPMin << ", " << cameraRMax << ", " << cameraRMin << " >>" << endl;
 
@@ -219,12 +243,13 @@ int main(int argc, char **argv){
         cloudVox01->width = slides;
         cloudVox01->height = cameraPointsNumber;
         cloudVox01->points.resize(cloudVox01->width * cloudVox01->height);
+        cout << cloudVox01->width * cloudVox01->height << endl;
 
         for(size_t i = 0; i< slides; ++i){
             for(size_t ii = 0; ii< cameraPointsNumber; ++ii){
                 cloudVox01->at(i,ii).x = xList[ii];
                 cloudVox01->at(i,ii).y = -1*speed*i;//speed * (slides-1-i)
-                cloudVox01->at(i,ii).z = 0.0;
+                cloudVox01->at(i,ii).z = -0.35;
             }
         }//cout << cloudVox01->at(3, 6).y << endl;
 
@@ -233,9 +258,16 @@ int main(int argc, char **argv){
         int LeftOrder = 0;
         for(size_t i = 0; i< slides; ++i){
             int RightOrder = LeftOrder + (int)(edgeResolution[0][i]);
-            for(size_t k=LeftOrder; k <RightOrder; ++k){
+            
+            for(int k=LeftOrder; k <RightOrder; ++k){
+                
                 int OrderOO = ceil(( cameraPMax -cloudAll01->points[k].x - intStep/2)/intStep );
+                //int OrderOO = (int)(floor((  cloudAll01->points[k].x -cameraPMin  +intStep/2)/intStep ));
+
+                if(OrderOO >= cameraPointsNumber-1)
+                OrderOO = cameraPointsNumber-1;// there is something wrong with 00sl camera data, while oddly others are good. I spent about 3 hours to figure it out, then I gave it up and just mute the number brustly. The amount of the overload number is not that huge.
                 cloudVox01->at(i,OrderOO).z = cloudAll01->points[k].z;
+
             }
             LeftOrder = RightOrder;
         }

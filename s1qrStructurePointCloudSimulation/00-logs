@@ -1,0 +1,158 @@
+jellyfish@jellyfish:~/cpps/FinalPaperSourceCodes/s1StructurePointCloudSimulation-qr0410$ ./autobuild.sh 
+autobuild.sh  CMakeLists.txt  logs  processLaserFrom0410.cpp  ScanClouds
+-- The C compiler identification is GNU 5.4.0
+-- The CXX compiler identification is GNU 5.4.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Checking for module 'eigen3'
+--   Found eigen3, version 3.3.7
+-- Found Eigen: /usr/include/eigen3  
+-- Eigen found (include: /usr/include/eigen3, version: 3.3.7)
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Looking for pthread_create
+-- Looking for pthread_create - not found
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE  
+-- Boost version: 1.58.0
+-- Found the following Boost libraries:
+--   system
+--   filesystem
+--   thread
+--   date_time
+--   iostreams
+--   serialization
+--   chrono
+--   atomic
+--   regex
+-- Checking for module 'libusb-1.0'
+--   Found libusb-1.0, version 1.0.20
+-- Found USB_10: /usr/lib/x86_64-linux-gnu/libusb-1.0.so  
+-- Found OpenNI: /usr/lib/libOpenNI.so  
+-- OpenNI found (include: /usr/include/ni, lib: /usr/lib/libOpenNI.so)
+-- Found OpenNI2: /usr/lib/libOpenNI2.so  
+-- OpenNI2 found (include: /usr/include/openni2, lib: /usr/lib/libOpenNI2.so)
+** WARNING ** io features related to pcap will be disabled
+** WARNING ** io features related to png will be disabled
+-- Found libusb-1.0: /usr/include  
+** WARNING ** io features related to libusb-1.0 will be disabled
+-- Checking for module 'flann'
+--   Found flann, version 1.8.4
+-- FLANN found (include: , lib: flann_cpp)
+-- FLANN found (include: , lib: flann_cpp)
+-- Found Qhull: optimized;/usr/local/lib/libqhull_p.so;debug;/usr/local/lib/libqhull_p.so  
+-- QHULL found (include: /usr/include, lib: optimized;/usr/local/lib/libqhull_p.so;debug;/usr/local/lib/libqhull_p.so)
+-- OpenNI found (include: /usr/include/ni, lib: /usr/lib/libOpenNI.so)
+-- OpenNI2 found (include: /usr/include/openni2, lib: /usr/lib/libOpenNI2.so)
+-- looking for PCL_COMMON
+-- Found PCL_COMMON: /usr/local/lib/libpcl_common.so  
+-- looking for PCL_OCTREE
+-- Found PCL_OCTREE: /usr/local/lib/libpcl_octree.so  
+-- looking for PCL_IO
+-- Found PCL_IO: /usr/local/lib/libpcl_io.so  
+-- looking for PCL_KDTREE
+-- Found PCL_KDTREE: /usr/local/lib/libpcl_kdtree.so  
+-- looking for PCL_SEARCH
+-- Found PCL_SEARCH: /usr/local/lib/libpcl_search.so  
+-- looking for PCL_SAMPLE_CONSENSUS
+-- Found PCL_SAMPLE_CONSENSUS: /usr/local/lib/libpcl_sample_consensus.so  
+-- looking for PCL_FILTERS
+-- Found PCL_FILTERS: /usr/local/lib/libpcl_filters.so  
+-- looking for PCL_2D
+-- Found PCL_2D: /usr/local/include/pcl-1.9  
+-- looking for PCL_FEATURES
+-- Found PCL_FEATURES: /usr/local/lib/libpcl_features.so  
+-- looking for PCL_REGISTRATION
+-- Found PCL_REGISTRATION: /usr/local/lib/libpcl_registration.so  
+-- looking for PCL_ML
+-- Found PCL_ML: /usr/local/lib/libpcl_ml.so  
+-- looking for PCL_RECOGNITION
+-- Found PCL_RECOGNITION: /usr/local/lib/libpcl_recognition.so  
+-- looking for PCL_SURFACE
+-- Found PCL_SURFACE: /usr/local/lib/libpcl_surface.so  
+-- looking for PCL_GEOMETRY
+-- Found PCL_GEOMETRY: /usr/local/include/pcl-1.9  
+-- looking for PCL_VISUALIZATION
+-- Found PCL_VISUALIZATION: /usr/local/lib/libpcl_visualization.so  
+-- looking for PCL_SEGMENTATION
+-- Found PCL_SEGMENTATION: /usr/local/lib/libpcl_segmentation.so  
+-- looking for PCL_KEYPOINTS
+-- Found PCL_KEYPOINTS: /usr/local/lib/libpcl_keypoints.so  
+-- looking for PCL_TRACKING
+-- Found PCL_TRACKING: /usr/local/lib/libpcl_tracking.so  
+-- looking for PCL_STEREO
+-- Found PCL_STEREO: /usr/local/lib/libpcl_stereo.so  
+-- looking for PCL_OUTOFCORE
+-- Found PCL_OUTOFCORE: /usr/local/lib/libpcl_outofcore.so  
+-- looking for PCL_PEOPLE
+-- Found PCL_PEOPLE: /usr/local/lib/libpcl_people.so  
+-- Found PCL: pcl_common;pcl_octree;pcl_io;pcl_kdtree;pcl_search;pcl_sample_consensus;pcl_filters;pcl_features;pcl_registration;pcl_ml;pcl_recognition;pcl_surface;pcl_visualization;pcl_segmentation;pcl_keypoints;pcl_tracking;pcl_stereo;pcl_outofcore;pcl_people;/usr/lib/x86_64-linux-gnu/libboost_system.so;/usr/lib/x86_64-linux-gnu/libboost_filesystem.so;/usr/lib/x86_64-linux-gnu/libboost_thread.so;/usr/lib/x86_64-linux-gnu/libboost_date_time.so;/usr/lib/x86_64-linux-gnu/libboost_iostreams.so;/usr/lib/x86_64-linux-gnu/libboost_serialization.so;/usr/lib/x86_64-linux-gnu/libboost_chrono.so;/usr/lib/x86_64-linux-gnu/libboost_atomic.so;/usr/lib/x86_64-linux-gnu/libboost_regex.so;/usr/lib/x86_64-linux-gnu/libpthread.so;optimized;/usr/local/lib/libqhull_p.so;debug;/usr/local/lib/libqhull_p.so;/usr/lib/libOpenNI.so;/usr/lib/libOpenNI2.so;flann_cpp;vtkFiltersParallelImaging;vtkFiltersImaging;vtkFiltersStatistics;vtkCommonExecutionModel;vtkCommonDataModel;vtkCommonMath;vtkCommonCore;vtksys;vtkCommonMisc;vtkCommonSystem;vtkCommonTransforms;vtkImagingFourier;vtkImagingCore;vtkalglib;vtkImagingGeneral;vtkImagingSources;vtkFiltersParallel;vtkFiltersExtraction;vtkFiltersCore;vtkFiltersGeneral;vtkCommonComputationalGeometry;vtkFiltersGeometry;vtkFiltersModeling;vtkFiltersSources;vtkParallelCore;vtkIOLegacy;vtkIOCore;vtkzlib;vtkRenderingCore;vtkCommonColor;vtkIOPLY;vtkIOGeometry;vtkFiltersGeneric;vtkViewsContext2D;vtkRenderingContext2D;vtkRenderingFreeType;vtkfreetype;vtkftgl;vtkViewsCore;vtkInteractionWidgets;vtkFiltersHybrid;vtkImagingHybrid;vtkIOImage;vtkDICOMParser;vtkmetaio;vtkjpeg;vtkpng;vtktiff;vtkInteractionStyle;vtkRenderingAnnotation;vtkImagingColor;vtkRenderingVolume;vtkjsoncpp;vtkexpat;vtkIONetCDF;vtkNetCDF;vtkNetCDF_cxx;vtkhdf5_hl;vtkhdf5;vtkIOMINC;vtkFiltersProgrammable;vtkRenderingContextOpenGL;vtkRenderingOpenGL;vtkViewsInfovis;vtkChartsCore;vtkInfovisCore;vtkInfovisLayout;vtkRenderingLabel;vtkIOAMR;vtkFiltersAMR;vtksqlite;vtkGUISupportQtWebkit;vtkViewsQt;vtkGUISupportQt;vtkFiltersTexture;vtkFiltersSelection;vtkRenderingVolumeOpenGL;verdict;vtkIOXMLParser;vtkproj4;vtkIOExport;vtkRenderingGL2PS;vtkgl2ps;vtkRenderingImage;vtkGUISupportQtOpenGL;vtkFiltersFlowPaths;vtkIOXML;vtkIOParallelXML;vtkFiltersHyperTree;vtkIOSQL;vtkoggtheora;vtkRenderingQt;vtkIOInfovis;vtklibxml2;vtkImagingStatistics;vtkexoIIc;vtkFiltersSMP;vtkGeovisCore;vtkFiltersVerdict;vtkIOParallel;vtkGUISupportQtSQL;vtkDomainsChemistry;vtkIOEnSight;vtkIOVideo;vtkImagingMath;vtkImagingStencil;vtkInteractionImage;vtkRenderingLIC;vtkIOImport;vtkIOMovie;vtkImagingMorphological;vtkRenderingLOD;vtkIOExodus;vtkIOLSDyna (Required is at least version "1.2") 
+Building the main cpp: /home/jellyfish/cpps/FinalPaperSourceCodes/s1StructurePointCloudSimulation-qr0410/processLaserFrom0410.cpp
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/jellyfish/cpps/FinalPaperSourceCodes/s1StructurePointCloudSimulation-qr0410/build20200424033846
+Scanning dependencies of target main
+[ 50%] Building CXX object CMakeFiles/main.dir/processLaserFrom0410.cpp.o
+[100%] Linking CXX executable main
+[100%] Built target main
+CMakeCache.txt  CMakeFiles  cmake_install.cmake  main  Makefile
+Initialization time: 211ms.
+[pcl::PCDReader::readHeader] No points to read
+[pcl::PCDReader::readHeader] No points to read
+[pcl::PCDReader::readHeader] No points to read
+
+ The edgeResolution information:
+Slides, TotalNumber, Numbers, pxMax, pxMin, rxMax, rxMin
+0: 1, 1, 0, 0, 0, 100, 
+1: 2, 1, 0, 0, 0, 100, 
+2: 3, 1, 0, 0, 0, 100, 
+3: 57, 54, 0.278292, 0.255587, 0.00217101, 0.000124991, 
+<<, 0.907156, -0.983371, 0.518026, 2.00421e-06 >>
+Lattie length = 0.00394682, X Range is: 0.907156, -0.983371
+384000
+
+ The edgeResolution information:
+Slides, TotalNumber, Numbers, pxMax, pxMin, rxMax, rxMin
+0: 62, 62, -0.50503, -0.69118, 0.00539899, 0.00152999, 
+1: 124, 62, -0.505023, -0.691122, 0.00539798, 0.00152999, 
+2: 186, 62, -0.505017, -0.691064, 0.00539702, 0.001531, 
+3: 248, 62, -0.505011, -0.691007, 0.00539804, 0.00152999, 
+<<, 0.990708, -0.981583, 1.01089, -0 >>
+Lattie length = 0.00411752, X Range is: 0.990708, -0.981583
+384000
+
+ The edgeResolution information:
+Slides, TotalNumber, Numbers, pxMax, pxMin, rxMax, rxMin
+0: 63, 63, 0.675007, 0.484665, 0.005445, 0.00161201, 
+1: 126, 63, 0.674961, 0.484648, 0.00544494, 0.00161302, 
+2: 189, 63, 0.674914, 0.484631, 0.00544298, 0.00161302, 
+3: 252, 63, 0.674868, 0.484614, 0.00544298, 0.00161201, 
+<<, 0.989735, -0.98327, 1.02331, 2.02656e-06 >>
+Lattie length = 0.00411901, X Range is: 0.989735, -0.98327
+384000
+[pcl::PCDReader::readHeader] No points to read
+[pcl::PCDReader::readHeader] No points to read
+[pcl::PCDReader::readHeader] No points to read
+
+ The edgeResolution information:
+Slides, TotalNumber, Numbers, pxMax, pxMin, rxMax, rxMin
+0: 1, 1, 0, 0, 0, 100, 
+1: 2, 1, 0, 0, 0, 100, 
+2: 3, 1, 0, 0, 0, 100, 
+3: 49, 46, -0.219812, -0.231397, 0.00207499, 0.000104994, 
+<<, 0.982005, -0.724275, 0.378725, 9.53674e-07 >>
+Lattie length = 0.00356217, X Range is: 0.982005, -0.724275
+384000
