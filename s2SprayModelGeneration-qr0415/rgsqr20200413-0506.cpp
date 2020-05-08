@@ -3,7 +3,7 @@
 //  * Date: 2020-04-13 23:52:28
 //  * Github: https://github.com/ShepherdQR
 //  * LastEditors: Shepherd Qirong
-//  * LastEditTime: 2020-05-06 05:05:29
+//  * LastEditTime: 2020-05-08 12:55:26
 //  * Copyright (c) 2019--20xx Shepherd Qirong. All rights reserved.
 */
 
@@ -106,7 +106,7 @@ float colorList[6][3]={1, 0, 0,
         0.1, 0.2, 0.3,  0.4, 0.2, 0.3};
 
 
-float voxXout = 0.03, voxYout = 0.03;
+float voxXout = 0.1, voxYout = 0.1;
 float voxUhat = 0.015, voxVhat = 0.015; // 0.02m
 
 float cameraLocation[4][6]={{0.0, -M_PI_2, 0.0, -2.9, 0.0, 1.03},
@@ -540,6 +540,7 @@ int main( int argc, char** argv ){
         cloudVox02->width <<", "<< cloudVox02->height << ", "<< cloudVox02->width * cloudVox02->height << endl;
 
         int nn(0);
+        float outPoints[numYout * numXout][8]={0};//xyz,rgb,label+bool
         for(size_t i = 0; i< numYout ; ++i){
             for(size_t ii = 0; ii<numXout ; ++ii){
                 float x = pmax.x-voxXout/2 - ii * voxXout ;
@@ -587,12 +588,56 @@ int main( int argc, char** argv ){
                 stringstream ssn;
                 ssn << ++nn; 
                 string name="cube"+ssn.str();
-                if((colorLabelPList[i][ii] !=4) & (z < -0.35) )
-                viewer5.addCube (x- voxXout/2, x+voxXout/2,y-voxYout/2, y+voxYout/2, z, z+0.01, colorR, colorG, colorB, name);
-                
+                if((colorLabelPList[i][ii] !=4) & (z < -0.35) ){
+                    viewer5.addCube (x- voxXout/2, x+voxXout/2,y-voxYout/2, y+voxYout/2, z, z+0.01, colorR, colorG, colorB, name);
+                    outPoints[i+i*ii+ii][7]=1;
+                    outPoints[i+i*ii+ii][6]=colorLabelPList[i][ii];
+                    outPoints[i+i*ii+ii][5]=colorB;
+                    outPoints[i+i*ii+ii][4]=colorG;
+                    outPoints[i+i*ii+ii][3]=colorR;
+                }
+            }
+        }
+
+
+
+        pcl::PointCloud<pcl::PointXYZ>::Ptr cloudVox02Trans0(new pcl::PointCloud<pcl::PointXYZ>);
+        pcl::copyPointCloud(*cloudVox02, *cloudVox02Trans0);
+        pcl::PointCloud<pcl::PointXYZ>::Ptr cloudVox02Trans1(new pcl::PointCloud<pcl::PointXYZ>);
+        float matrixCurIn6[6]={0};
+        for(size_t im = 0; im< 6; ++im){
+            matrixCurIn6[im]=   cameraLocation[0][im];
+        }
+        
+        transformAngleAxis(cloudVox02Trans0, cloudVox02Trans1, matrixCurIn6);
+        for(size_t i = 0; i< numYout ; ++i){
+            for(size_t ii = 0; ii<numXout ; ++ii){
+
+                outPoints[i+i*ii+ii][2]=cloudVox02Trans1->at(i,ii).z;
+                outPoints[i+i*ii+ii][1]=cloudVox02Trans1->at(i,ii).y;
+                outPoints[i+i*ii+ii][0]=cloudVox02Trans1->at(i,ii).x; 
+            }
+        }
+
+        cout << "spray model in " << voxXout << "x" << voxXout << endl;
+        outfile << "spray model in " << voxXout << "x" << voxXout << endl;
+        outfile << "x, y, z, r, g, b, colorClass" << endl;
+        for(size_t i=0; i<numYout * numXout; ++i ){
+            if(outPoints[i][7]==1){
+                for(size_t j=0; j<6; ++j ){
+                    outfile <<  outPoints[i][j] << ", ";
+                }
+                outfile <<  outPoints[i][7] << endl;
             }
         }
         
+
+
+
+
+
+
+
         //viewer5.addPointCloud(cloudVox02, "cloudslbVox" );
         //viewer5.setPointCloudRenderingProperties(pcl::visualization::RenderingProperties::PCL_VISUALIZER_POINT_SIZE, 5, "cloudslbVox" );
         viewer5.setCameraPosition((pmax.x + pmin.x)/2, (pmax.y + pmin.y)/2, 0 *(pmax.z + pmin.z)/2, (pmax.x + pmin.x)/2, (pmax.y + pmin.y)/2, (pmax.z + pmin.z)/2,  1.0,  0.0,  0.0);
@@ -600,9 +645,17 @@ int main( int argc, char** argv ){
 
         if(savePcds){
             pcl::io::savePCDFile (processedPath +"/final-spray-SLB.pcd",*cloudVox02);
-        }
+        } 
+
+
+        
+        
+
 
     }
+
+   
+
 
 
 
