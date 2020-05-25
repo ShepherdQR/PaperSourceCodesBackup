@@ -3,7 +3,7 @@
 @Date: 2020-04-01 23:06:10
 @Github: https://github.com/ShepherdQR
 @LastEditors: Shepherd Qirong
-@LastEditTime: 2020-04-11 21:02:53
+@LastEditTime: 2020-05-23 15:05:40
 @Copyright (c) 2019--20xx Shepherd Qirong. All rights reserved.
 '''
 
@@ -28,11 +28,24 @@ import bpy, time, os
 import numpy as np
 import blensor
 
+
+scanSwitch = True
+
+# model 
+whichModel = 2
+nameModel = ("01Tank-T99A-20200322", "02Tank-2A5-20200522", "03Tank-T90A-20200522")
+lengthModel = (8.0, 5.3, 7.2 )
+slideMoedel = (800, 265, 400 )
+
+oriZModel = (0, 0.36, 0)
+
+
 # camera
 ### camera: half angle 27.8degree, angle_resolution = 2*27.8/1920, we set to k, for example 2*27.8/40, 
 halfAngle = 27.8
 AngleResolution = 2*halfAngle/1920
 AngleResolution = 2*halfAngle/60
+AngleResolution = 2*halfAngle/(1920/4)
 maxRadius = 2.125
 
 pi = 3.141592654
@@ -111,6 +124,16 @@ def parentObjects(childName, parentName):
 
 
 # ####### ------------ structure---------
+
+def End(  ):
+    # using the default scenes
+    #samples = 64
+
+    timeStart = time.strftime("%Y%m%d%H%M%S", time.localtime())
+    outLog(line = "// time \n"+ timeStart +"\n", timePassed= -1, folder =projectPath+"/commonSettings/", logName =  "Settings.log", cover = True)
+    outLog("Ends at "+ timeStart +"\n")
+
+
 def Initialization( device = "GPU", samples = 64 ):
     # using the default scenes
     #samples = 64
@@ -137,7 +160,7 @@ def Initialization( device = "GPU", samples = 64 ):
 
 
 
-    bpy.data.objects["Tank040inOriSys"].location =[0,0,0]
+    bpy.data.objects[nameModel[whichModel]].location =[0,0,oriZModel[whichModel]]
     for i in bpy.data.objects:
         if((i.name[:4]=="Scan") or (i.name[:3]=="zqr")):
             bpy.ops.object.select_all(action='DESELECT')
@@ -148,7 +171,7 @@ def Initialization( device = "GPU", samples = 64 ):
 
 
 def tankMoving( dy = 0.1):
-    bpy.data.objects["Tank040inOriSys"].location[1] +=dy 
+    bpy.data.objects[nameModel[whichModel]].location[1] +=dy 
 
     
 def scan2DLaser( cameraMode = 0, save2File = 1, showScan = True, frame = 0, dy = 0.1):
@@ -195,7 +218,7 @@ def scan2DLaser( cameraMode = 0, save2File = 1, showScan = True, frame = 0, dy =
                 basicAdd( part ="Cube" , name = scanCollectionCurrent, location =(0, 0.4+0.4*i, 0), scale =(0.1, 0.1, 0.1)  )
                 bpy.data.objects[scanCollectionCurrent].hide = True
                 lockfunction( part = scanCollectionCurrent, lock =True )
-                parentObjects(scanCollectionCurrent, "Tank040inOriSys")
+                parentObjects(scanCollectionCurrent, nameModel[whichModel])
 
             for i in bpy.data.objects:
                 if((i.name[:5]=="Scan.") and (len(i.name)< 10)):
@@ -265,12 +288,17 @@ if __name__ == "__main__":
     # timeStart = time.strftime("%Y%m%d%H%M%S", time.localtime())
     # outLog("Starts at "+ timeStart +"\n")
 
+
+
     Initialization( device = "GPU", samples = 64 )
 
-    for i in range( 30 ):
-        speed = 0.1 #m/s
-        tankMoving( dy = speed)
-        scan2DLaser( cameraMode = 1, save2File = 1, showScan = True, frame = i, dy = speed )
+    if scanSwitch:
+        for i in range( slideMoedel[whichModel] ):
+            speed = lengthModel[whichModel] /  slideMoedel[whichModel]    #m/s
+            tankMoving( dy = speed)
+            scan2DLaser( cameraMode = 1, save2File = 1, showScan = True, frame = i, dy = speed )
+        
+    End()
 
 
     #scan2DLaser( cameraMode = 0, save2File = 1)

@@ -1,0 +1,26 @@
+20200525-03:23:48
+Visualization Initialization costs time: 463 ms.
+Origional point number is: 858765
+Current voxel point number is: 19720
+9.3915e-05
+1.57845
+0.0672639
+2.5038
+0.393207
+2.62751
+-0.870744, -0.491736, 0.383152, 9.3915e-05
+0.491736, -0.870744, -0.595422, 1.57845
+-0.383152, 0.595422, 0.923685, 0.0672639
+0, 0, 0, 1
+Origional point number is: 310291
+Current voxel point number is: 13051
+1, 0, 0, 0
+0, 1, 0, 0
+0, 0, 1, 0
+0, 0, 0, 1
+Origional point number is: 430630
+Current voxel point number is: 19053
+1, 0, 0, 0
+0, 1, 0, 0
+0, 0, 1, 0
+0, 0, 0, 1

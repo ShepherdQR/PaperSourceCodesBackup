@@ -1,0 +1,21 @@
+20200525-07:47:32
+Visualization Initialization costs time: 214 ms.
+load pcd files from: /home/jellyfish/cpps/FinalPaperSourceCodes/s3Registration-qr0524//voxelPcds/20200525-03:23:48/vox-Tank1-T99A-20200525-03:23:48.pcd
+0.00103308
+1.36299
+1.7399
+0.541817
+0.325275
+0.902613
+0.619561, 0.784948, -0.31957, 0.00103308
+-0.784948, 0.619561, 0.515694, 1.36299
+0.31957, -0.515694, 0.947563, 1.7399
+0, 0, 0, 1
+0.000274002
+0.0271151
+load pcd files from: /home/jellyfish/cpps/FinalPaperSourceCodes/s3Registration-qr0524//voxelPcds/20200525-03:23:48/vox-Tank2-2A5-20200525-03:23:48.pcd
+0.000362731
+0.405042
+load pcd files from: /home/jellyfish/cpps/FinalPaperSourceCodes/s3Registration-qr0524//voxelPcds/20200525-03:23:48/vox-Tank3-T90A-20200525-03:23:48.pcd
+0.00027205
+0.108734

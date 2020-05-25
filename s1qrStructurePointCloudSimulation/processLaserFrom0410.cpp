@@ -3,7 +3,7 @@
 //  * Date: 2020-04-10 17:36:56
 //  * Github: https://github.com/ShepherdQR
 //  * LastEditors: Shepherd Qirong
-//  * LastEditTime: 2020-04-24 03:44:05
+//  * LastEditTime: 2020-05-24 10:41:32
 //  * Copyright (c) 2019--20xx Shepherd Qirong. All rights reserved.
 */
 
@@ -27,6 +27,7 @@
 
 
 #include <pcl/console/time.h>
+#include <pcl/filters/passthrough.h>
 #include <pcl/io/io.h>
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
@@ -54,9 +55,21 @@ float cameraLocation[4][6]={{0.0, -M_PI_2, 0.0, -2.9, 0.0, 1.03},
                             {0.0, M_PI_2, 0.0, 2.9, 0.0, 1.03}};
 float cameraColor[4][3]={{1,0,0}, {0,1,0}, {0,0,1}, {1,0,1}};
 
+
+
+string wherePcds[3]={
+    "/home/jellyfish/cpps/FinalPaperSourceCodes/AutoScanProject-20200324/Tank01-T99A-20200522/ScanFIlesCollection/T99A-Scan03_480_800-20200423235120",
+    "/home/jellyfish/cpps/FinalPaperSourceCodes/AutoScanProject-20200324/TankALL01-03/Scan-2A5-265_480-20200522100831",
+    "/home/jellyfish/cpps/FinalPaperSourceCodes/AutoScanProject-20200324/TankALL01-03/scan-T90A-400_480-20200523150646"
+};
+float lengthModel[3] ={ 8.0, 5.3, 7.2 };
+int slideModel[3] = {800, 265, 400 };
+
+int pcdProcessed = 2;//0,1,2; set to -1 to use the worldsetting location
+
 //int direction[4] = {};
-float speed = 0.01;//  m/s
-int slides = 800;// slides
+float speed = lengthModel[pcdProcessed]/ slideModel[pcdProcessed];//  m/s
+int slides = slideModel[pcdProcessed];// slides
 
 bool savePcd = true;
 //bool savePcd = false;
@@ -109,14 +122,19 @@ int main(int argc, char **argv){
             file_inf.push_back(file_temp);
         }
     }//cout << endl;
-    string FileFolderName = scanFiles + file_inf[0];
+    string FileFolderName;
+    if(pcdProcessed == -1){
+        FileFolderName = scanFiles + file_inf[0];
+    }else{
+        FileFolderName = wherePcds[pcdProcessed];
+    }
 
     pcl::visualization::PCLVisualizer viewer1("Ori"), viewer2("Vox");
     viewer1.setBackgroundColor(255, 255, 255);// 255 *3 = white
     viewer2.setBackgroundColor(255, 255, 255);
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloudAllOri(new pcl::PointCloud<pcl::PointXYZ>),cloudAllVox(new pcl::PointCloud<pcl::PointXYZ>);
-    pcl::PointCloud<pcl::PointXYZ>::Ptr cloudAllOritrans(new pcl::PointCloud<pcl::PointXYZ>),cloudAllVoxtrans(new pcl::PointCloud<pcl::PointXYZ>);
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloudAllOritrans(new pcl::PointCloud<pcl::PointXYZ>),cloudAllVoxtrans(new pcl::PointCloud<pcl::PointXYZ>),cloudAllVoxtransMeaning(new pcl::PointCloud<pcl::PointXYZ>);
 
     // for(size_t ic = 0; ic< 4; ++ic)
     //     for(size_t jc = 0; jc< 3; ++jc){
@@ -239,7 +257,7 @@ int main(int argc, char **argv){
 
         
         // 2.5.1  make vox pcd---01
-        pcl::PointCloud<pcl::PointXYZ>::Ptr cloudVox01(new pcl::PointCloud<pcl::PointXYZ>), cloudVox01trans(new pcl::PointCloud<pcl::PointXYZ>);
+        pcl::PointCloud<pcl::PointXYZ>::Ptr cloudVox01(new pcl::PointCloud<pcl::PointXYZ>), cloudVox01trans(new pcl::PointCloud<pcl::PointXYZ>), cloudVox01Meaning(new pcl::PointCloud<pcl::PointXYZ>);
         cloudVox01->width = slides;
         cloudVox01->height = cameraPointsNumber;
         cloudVox01->points.resize(cloudVox01->width * cloudVox01->height);
@@ -273,10 +291,24 @@ int main(int argc, char **argv){
         }
         if(savePcd == true) pcl::io::savePCDFile (scanCloudPath+ "/Vox-" + cameraList[usingCameraList[j]] + ".pcd", *cloudVox01);
 
-
         transformAngleAxis(cloudVox01, cloudVox01trans, matrixCurIn2);
         if(savePcd == true) pcl::io::savePCDFile (scanCloudPath+ "/Vox-trans-" + cameraList[usingCameraList[j]] + ".pcd", *cloudVox01trans);
         *cloudAllVoxtrans = *cloudAllVoxtrans + *cloudVox01trans;
+
+
+        // trans meaningful points only
+        pcl::IndicesPtr indices_filter (new std::vector <int>);
+        pcl::PassThrough<pcl::PointXYZ> pass(true);
+        pass.setInputCloud (cloudVox01);
+        pass.setFilterFieldName ("z");
+        pass.setFilterLimits (-1 * maxRadius, -0.36);
+        pass.filter (*indices_filter);
+        pcl::copyPointCloud(*cloudVox01, *indices_filter, *cloudVox01Meaning);
+        transformAngleAxis(cloudVox01Meaning, cloudVox01Meaning, matrixCurIn2);
+        *cloudAllVoxtransMeaning = *cloudAllVoxtransMeaning + *cloudVox01Meaning;
+
+
+
 
         viewer2.addPointCloud(cloudVox01trans , cameraList[usingCameraList[j]].c_str());
         viewer2.setPointCloudRenderingProperties( pcl::visualization::RenderingProperties::PCL_VISUALIZER_POINT_SIZE, 5, cameraList[usingCameraList[j]].c_str() );
@@ -287,6 +319,7 @@ int main(int argc, char **argv){
     if(savePcd == true) {
         pcl::io::savePCDFile (scanCloudPath+ "/Ori-All-Trans.pcd", *cloudAllOritrans);
         pcl::io::savePCDFile (scanCloudPath+ "/Vox-All-Trans.pcd", *cloudAllVoxtrans);
+        pcl::io::savePCDFile (scanCloudPath+ "/Vox-All-TransMeaning.pcd", *cloudAllVoxtransMeaning);
     }
 
 
@@ -330,7 +363,12 @@ void transformAngleAxis( pcl::PointCloud<pcl::PointXYZ>::Ptr cloudIn, pcl::Point
 }
 
 
-            
+
+
+
+
+
+
             
             
 
