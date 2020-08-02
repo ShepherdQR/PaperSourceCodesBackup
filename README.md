@@ -3,9 +3,13 @@
  * @Date: 2020-04-12 13:48:44
  * @Github: https://github.com/ShepherdQR
  * @LastEditors: Shepherd Qirong
- * @LastEditTime: 2020-05-26 00:00:10
+ * @LastEditTime: 2020-08-02 09:55:35
  * @Copyright (c) 2019--20xx Shepherd Qirong. All rights reserved.
  -->
+
+<!--2020-08-02 09:49:19
+    On 20200801, I recollect the codes and the figures that I used during writing my paper. I then upload them with the paper.
+-->
 
 <!--    2020-05-25 23:57:26
     Of course there are lots of details to improve, while I think it is a stop time for me to modify the codes more.
@@ -13,6 +17,14 @@
 
 ### Started on 2020-04-12 13:49:05
 I decide to backup the source codes of the paper here.
+
+### day10 2020-08-02 09:55:04
+git init
+git reomte add origin git@github.com:ShepherdQR/PaperSourceCodesBackup.git
+get pull origin master
+git add .
+git commit -m 'day010LastPost'
+git push -u origin master
 
 
 ### day09 2020-05-25 23:56:29

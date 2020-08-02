@@ -1,0 +1,1064 @@
+jellyfish@jellyfish:~$ cd Softwares/vpl-master02/
+jellyfish@jellyfish:~/Softwares/vpl-master02$ ls
+apps                 data_example  nbvs_planning     run7.sh
+autobuild.sh         Doxyfile      partialmodel      test_freeflyer_vasquez091
+build20200426032208  lib           partialmodel_hrt  viewplanning
+CMakeLists.txt       LICENSE.tex   rangesimulator
+contributors.txt     multimedia    README.md
+jellyfish@jellyfish:~/Softwares/vpl-master02$ ./run7.sh 
+Consejo Nacional de Ciencia y Tecnología
+Instituto Nacional de Astrofísica Óptica y Electrónica
+Centro de Innovación y Desarrollo Tecnológico en Cómputo
+--- Range Sensor Simulated ---
+
+---------- Range sensor -------
+Horizontal aperture: 0.77
+Vertial aperture: 0.61
+horizontal points:176
+Vertial points:144
+Director ray: [0, 0, 1]
+--------------  Range simulator Configuration ----------------
+Resolution: 0.0075
+Maximum lenght: 0.5
+File (file):data_example/test01/config/scene_table_with_bunny.dat
+Raw format (rawFormat):1
+Rays file:data_example/test01/config/sensorRays.dat
+Scene Transformation:
+(freeSpace): 1
+Reading double coordinates from data_example/test01/config/scene_table_with_bunny.dat
+59776 readed points.
+Center position of the model: 0 7.56701e-44 0
+Scale factor: 1
+Reading rays....
+Readed rays: 25344
+Inserting free space..
+-------------------------------------------------------------
+
+------------- Partial Model Configuration ------------
+Sensor:
+  Director ray: (0 0 1)
+  Minimun DOV: 0.4
+  Maximun DOV: 5
+Object Capsule: [-0.4, -0.4, 0.43][0.4, 0.4, 0.95]
+Capsule Center: (0 0 0.69)
+Capsule radius:0.622575
+Escene: [-1.8, -1.8, 0][1.8, 1.8, 2]
+-------------------------------------
+---------- Volumetric configuration -------
+Voxel reslution:0.02
+Weight:0.9
+Free space:1
+Collision gap:0.1
+Min unknown:15
+Min overlap:20
+max range:2.8
+---------------- Octree -------------------
+Inserting free space..
+-------------------------------------------
+Reading rays....
+Readed rays: 2565
+---------- NBV Planner -------
+Delta T: 2
+Number of Nodes: 10000
+------------------------------
+
+----------------- WorkspaceNBVPlanner Configuration ------------ 
+View sphere center: [0, 0, 0.69]
+Sphere points radious: 1
+Tesselation level: 2
+320 views were generated
+Starting Next Best View Problem.
+Reading initial position.
+data_example/test01/config/p0.vs
+Readed complete. 1views.
+---------- Reconstructor 3D -------
+Wait for user:0
+Max iterations(stop criteria)12
+-----------------------------------	
+
+---------- Direct positioning reconstructor 3D -------
+Gap: 0.005
+-----------------------------------
+Solving Reconstruction.
+Robot current configuration:
+ 0 0 0 0 0 0
+Saving data...
+Last point cloud saved. data_example/test01/data/occupied.triangles
+Saving data...
+Last point cloud saved. data_example/test01/data/unknown.triangles
+command: mkdir data_example/test01/data/0
+cp data_example/test01/data/* data_example/test01/data/0
+cp: omitting directory 'data_example/test01/data/0'
+command: rm data_example/test01/data/scan*
+rm: cannot remove 'data_example/test01/data/scan*': No such file or directory
+
+
+----------------------- View Planning Iteration 0----------------
+------------------------------- Positioning ---------------
+Moving to: 
+Robot Configuration: -1.5 0 0.7 0 0 0  
+
+Sensor Pose: x:-1.5  y:0  z:0.7		  yaw(z):-1.5708  pitch(y):-0  roll(x):-1.5708
+Sesor Orientation in deg: -90 -0 -90
+Occupied:0 	Unknown:0 	Utility:0
+FreeFlyer moving to 
+x: -1.5mts
+y: 0mts
+z: 0.7mts
+yaw: 0 = 0
+pitch: 0 = 0
+roll: 0 = 0
+-------------------------------- Scanning ------------------------
+Reconstructor: take scan
+Reading double coordinates from data_example/test01/data/current_scan.dat
+25344 readed points.
+25344 readed points.
+Robot sensor: obtained points from sensor: 25344
+[4,4]((1,0,0,-1.5),(0,1,0,0),(-0,0,1,0.7),(0,0,0,1))
+[4,4]((6.12323e-17,6.12323e-17,1,0),(-1,3.7494e-33,6.12323e-17,0),(-0,-1,6.12323e-17,0),(0,0,0,1))
+Converted origin: (-1.5,0,0.7)
+Robot sensor: scan performed
+Reconstructor: save scan
+Saving last point cloud...
+25344 points to be saved.
+Last point cloud saved. data_example/test01/data/scan_1.dat
+Saving sensor trajectory. data_example/test01/data/scan_origin_1.dat
+Saved sensor trajectory. data_example/test01/data/scan_origin_1.dat
+data_example/test01/data/scan_origin_1.dat
+data_example/test01/data/scan_1.dat
+----------------------------- Model update ----------------------
+Updating octree with scan.
+done.
+Readed points: 25344
+done.
+Readed points: 1
+Octree update took 1.39 seconds to run.
+                                       Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+file to read: data_example/test01/data/object_pts.dat
+Reading double coordinates from data_example/test01/data/object_pts.dat
+3571 readed points.
+Reading double coordinates from data_example/test01/config/bunny_ref_smalltable_nobase.dat
+32497 readed points.
+Correspondences: 11295
+%34.7571
+unknown volume 0.071848
+----------------------- Planing Next Best View ------------------
+Evaluating candidate views
+Best View of List
+Robot Configuration: 0.762327 0.580467 0.976211 -2.49081 0.29027 0  
+
+Sensor Pose: x:0.762327  y:0.580467  z:0.976211		  yaw(z):-2.49081  pitch(y):0.29027  roll(x):0
+Sesor Orientation in deg: -142.713 16.6312 0
+Occupied:0 	Unknown:0 	Utility:0.000623654
+
+command: mkdir data_example/test01/data/1
+cp data_example/test01/data/* data_example/test01/data/1
+cp: omitting directory 'data_example/test01/data/0'
+cp: omitting directory 'data_example/test01/data/1'
+command: rm data_example/test01/data/scan*
+
+
+----------------------- View Planning Iteration 1----------------
+------------------------------- Positioning ---------------
+Moving to: 
+Robot Configuration: 0.762327 0.580467 0.976211 -2.49081 0.29027 0  
+
+Sensor Pose: x:0.762327  y:0.580467  z:0.976211		  yaw(z):-2.49081  pitch(y):0.29027  roll(x):0
+Sesor Orientation in deg: -142.713 16.6312 0
+Occupied:0 	Unknown:0 	Utility:0.000623654
+FreeFlyer moving to 
+x: 0.762327mts
+y: 0.580467mts
+z: 0.976211mts
+yaw: -2.49081 = -142.713
+pitch: 0.29027 = 16.6312
+roll: 0 = 0
+-------------------------------- Scanning ------------------------
+Reconstructor: take scan
+Reading double coordinates from data_example/test01/data/current_scan.dat
+25344 readed points.
+25344 readed points.
+Robot sensor: obtained points from sensor: 25344
+[4,4]((-0.762327,0.60581,-0.227712,0.762327),(-0.580467,-0.79561,-0.173389,0.580467),(-0.286211,0,0.958167,0.976211),(0,0,0,1))
+[4,4]((6.12323e-17,6.12323e-17,1,0),(-1,3.7494e-33,6.12323e-17,0),(-0,-1,6.12323e-17,0),(0,0,0,1))
+Converted origin: (0.762327,0.580467,0.976211)
+Robot sensor: scan performed
+Reconstructor: save scan
+Saving last point cloud...
+25344 points to be saved.
+Last point cloud saved. data_example/test01/data/scan_2.dat
+Saving sensor trajectory. data_example/test01/data/scan_origin_2.dat
+Saved sensor trajectory. data_example/test01/data/scan_origin_2.dat
+data_example/test01/data/scan_origin_2.dat
+data_example/test01/data/scan_2.dat
+----------------------------- Model update ----------------------
+Updating octree with scan.
+done.
+Readed points: 25344
+done.
+Readed points: 1
+Octree update took 1.16 seconds to run.
+                                       Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+file to read: data_example/test01/data/object_pts.dat
+Reading double coordinates from data_example/test01/data/object_pts.dat
+11253 readed points.
+Reading double coordinates from data_example/test01/config/bunny_ref_smalltable_nobase.dat
+32497 readed points.
+Correspondences: 22710
+%69.8834
+unknown volume 0.022376
+----------------------- Planing Next Best View ------------------
+Evaluating candidate views
+Best View of List
+Robot Configuration: 0.762327 0.580467 0.403789 -2.49081 -0.29027 0  
+
+Sensor Pose: x:0.762327  y:0.580467  z:0.403789		  yaw(z):-2.49081  pitch(y):-0.29027  roll(x):0
+Sesor Orientation in deg: -142.713 -16.6312 0
+Occupied:0 	Unknown:0 	Utility:0.000410376
+
+command: mkdir data_example/test01/data/2
+cp data_example/test01/data/* data_example/test01/data/2
+cp: omitting directory 'data_example/test01/data/0'
+cp: omitting directory 'data_example/test01/data/1'
+cp: omitting directory 'data_example/test01/data/2'
+command: rm data_example/test01/data/scan*
+
+
+----------------------- View Planning Iteration 2----------------
+------------------------------- Positioning ---------------
+Moving to: 
+Robot Configuration: 0.762327 0.580467 0.403789 -2.49081 -0.29027 0  
+
+Sensor Pose: x:0.762327  y:0.580467  z:0.403789		  yaw(z):-2.49081  pitch(y):-0.29027  roll(x):0
+Sesor Orientation in deg: -142.713 -16.6312 0
+Occupied:0 	Unknown:0 	Utility:0.000410376
+FreeFlyer moving to 
+x: 0.762327mts
+y: 0.580467mts
+z: 0.403789mts
+yaw: -2.49081 = -142.713
+pitch: -0.29027 = -16.6312
+roll: 0 = 0
+-------------------------------- Scanning ------------------------
+Reconstructor: take scan
+Reading double coordinates from data_example/test01/data/current_scan.dat
+25344 readed points.
+25344 readed points.
+Robot sensor: obtained points from sensor: 25344
+[4,4]((-0.762327,0.60581,0.227712,0.762327),(-0.580467,-0.79561,0.173389,0.580467),(0.286211,0,0.958167,0.403789),(0,0,0,1))
+[4,4]((6.12323e-17,6.12323e-17,1,0),(-1,3.7494e-33,6.12323e-17,0),(-0,-1,6.12323e-17,0),(0,0,0,1))
+Converted origin: (0.762327,0.580467,0.403789)
+Robot sensor: scan performed
+Reconstructor: save scan
+Saving last point cloud...
+25344 points to be saved.
+Last point cloud saved. data_example/test01/data/scan_3.dat
+Saving sensor trajectory. data_example/test01/data/scan_origin_3.dat
+Saved sensor trajectory. data_example/test01/data/scan_origin_3.dat
+data_example/test01/data/scan_origin_3.dat
+data_example/test01/data/scan_3.dat
+----------------------------- Model update ----------------------
+Updating octree with scan.
+done.
+Readed points: 25344
+done.
+Readed points: 1
+Octree update took 1.35 seconds to run.
+                                       Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+file to read: data_example/test01/data/object_pts.dat
+Reading double coordinates from data_example/test01/data/object_pts.dat
+19208 readed points.
+Reading double coordinates from data_example/test01/config/bunny_ref_smalltable_nobase.dat
+32497 readed points.
+Correspondences: 24316
+%74.8254
+unknown volume 0.016464
+----------------------- Planing Next Best View ------------------
+Evaluating candidate views
+Best View of List
+Robot Configuration: 0.57735 0.57735 0.11265 -2.35619 -0.61548 0  
+
+Sensor Pose: x:0.57735  y:0.57735  z:0.11265		  yaw(z):-2.35619  pitch(y):-0.61548  roll(x):0
+Sesor Orientation in deg: -135 -35.2644 0
+Occupied:0 	Unknown:0 	Utility:0.000346894
+
+command: mkdir data_example/test01/data/3
+cp data_example/test01/data/* data_example/test01/data/3
+cp: omitting directory 'data_example/test01/data/0'
+cp: omitting directory 'data_example/test01/data/1'
+cp: omitting directory 'data_example/test01/data/2'
+cp: omitting directory 'data_example/test01/data/3'
+command: rm data_example/test01/data/scan*
+
+
+----------------------- View Planning Iteration 3----------------
+------------------------------- Positioning ---------------
+Moving to: 
+Robot Configuration: 0.57735 0.57735 0.11265 -2.35619 -0.61548 0  
+
+Sensor Pose: x:0.57735  y:0.57735  z:0.11265		  yaw(z):-2.35619  pitch(y):-0.61548  roll(x):0
+Sesor Orientation in deg: -135 -35.2644 0
+Occupied:0 	Unknown:0 	Utility:0.000346894
+FreeFlyer moving to 
+x: 0.57735mts
+y: 0.57735mts
+z: 0.11265mts
+yaw: -2.35619 = -135
+pitch: -0.61548 = -35.2644
+roll: 0 = 0
+-------------------------------- Scanning ------------------------
+Reconstructor: take scan
+Reading double coordinates from data_example/test01/data/current_scan.dat
+25344 readed points.
+25344 readed points.
+Robot sensor: obtained points from sensor: 25344
+[4,4]((-0.57735,0.707107,0.408248,0.57735),(-0.57735,-0.707107,0.408248,0.57735),(0.57735,0,0.816497,0.11265),(0,0,0,1))
+[4,4]((6.12323e-17,6.12323e-17,1,0),(-1,3.7494e-33,6.12323e-17,0),(-0,-1,6.12323e-17,0),(0,0,0,1))
+Converted origin: (0.57735,0.57735,0.11265)
+Robot sensor: scan performed
+Reconstructor: save scan
+Saving last point cloud...
+25344 points to be saved.
+Last point cloud saved. data_example/test01/data/scan_4.dat
+Saving sensor trajectory. data_example/test01/data/scan_origin_4.dat
+Saved sensor trajectory. data_example/test01/data/scan_origin_4.dat
+data_example/test01/data/scan_origin_4.dat
+data_example/test01/data/scan_4.dat
+----------------------------- Model update ----------------------
+Updating octree with scan.
+done.
+Readed points: 25344
+done.
+Readed points: 1
+Octree update took 0.70 seconds to run.
+                                       Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+file to read: data_example/test01/data/object_pts.dat
+Reading double coordinates from data_example/test01/data/object_pts.dat
+19515 readed points.
+Reading double coordinates from data_example/test01/config/bunny_ref_smalltable_nobase.dat
+32497 readed points.
+Correspondences: 24318
+%74.8315
+unknown volume 0.016488
+----------------------- Planing Next Best View ------------------
+Evaluating candidate views
+Best View of List
+Robot Configuration: 0.706968 -0.302648 0.050782 2.7371 -0.693481 0  
+
+Sensor Pose: x:0.706968  y:-0.302648  z:0.050782		  yaw(z):2.7371  pitch(y):-0.693481  roll(x):0
+Sesor Orientation in deg: 156.825 -39.7335 0
+Occupied:0 	Unknown:0 	Utility:0.000166793
+
+command: mkdir data_example/test01/data/4
+cp data_example/test01/data/* data_example/test01/data/4
+cp: omitting directory 'data_example/test01/data/0'
+cp: omitting directory 'data_example/test01/data/1'
+cp: omitting directory 'data_example/test01/data/2'
+cp: omitting directory 'data_example/test01/data/3'
+cp: omitting directory 'data_example/test01/data/4'
+command: rm data_example/test01/data/scan*
+
+
+----------------------- View Planning Iteration 4----------------
+------------------------------- Positioning ---------------
+Moving to: 
+Robot Configuration: 0.706968 -0.302648 0.050782 2.7371 -0.693481 0  
+
+Sensor Pose: x:0.706968  y:-0.302648  z:0.050782		  yaw(z):2.7371  pitch(y):-0.693481  roll(x):0
+Sesor Orientation in deg: 156.825 -39.7335 0
+Occupied:0 	Unknown:0 	Utility:0.000166793
+FreeFlyer moving to 
+x: 0.706968mts
+y: -0.302648mts
+z: 0.050782mts
+yaw: 2.7371 = 156.825
+pitch: -0.693481 = -39.7335
+roll: 0 = 0
+-------------------------------- Scanning ------------------------
+Reconstructor: take scan
+Reading double coordinates from data_example/test01/data/current_scan.dat
+25344 readed points.
+25344 readed points.
+Robot sensor: obtained points from sensor: 25344
+[4,4]((-0.706968,-0.393548,0.587636,0.706968),(0.302648,-0.919304,-0.251563,-0.302648),(0.639218,0,0.769026,0.050782),(0,0,0,1))
+[4,4]((6.12323e-17,6.12323e-17,1,0),(-1,3.7494e-33,6.12323e-17,0),(-0,-1,6.12323e-17,0),(0,0,0,1))
+Converted origin: (0.706968,-0.302648,0.050782)
+Robot sensor: scan performed
+Reconstructor: save scan
+Saving last point cloud...
+25344 points to be saved.
+Last point cloud saved. data_example/test01/data/scan_5.dat
+Saving sensor trajectory. data_example/test01/data/scan_origin_5.dat
+Saved sensor trajectory. data_example/test01/data/scan_origin_5.dat
+data_example/test01/data/scan_origin_5.dat
+data_example/test01/data/scan_5.dat
+----------------------------- Model update ----------------------
+Updating octree with scan.
+done.
+Readed points: 25344
+done.
+Readed points: 1
+Octree update took 0.85 seconds to run.
+                                       Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+file to read: data_example/test01/data/object_pts.dat
+Reading double coordinates from data_example/test01/data/object_pts.dat
+20309 readed points.
+Reading double coordinates from data_example/test01/config/bunny_ref_smalltable_nobase.dat
+32497 readed points.
+Correspondences: 24889
+%76.5886
+unknown volume 0.016096
+----------------------- Planing Next Best View ------------------
+Evaluating candidate views
+Best View of List
+Robot Configuration: 0.176888 -0.939215 0.395744 1.75695 -0.298677 0  
+
+Sensor Pose: x:0.176888  y:-0.939215  z:0.395744		  yaw(z):1.75695  pitch(y):-0.298677  roll(x):0
+Sesor Orientation in deg: 100.666 -17.1129 0
+Occupied:0 	Unknown:0 	Utility:6.70886e-05
+
+command: mkdir data_example/test01/data/5
+cp data_example/test01/data/* data_example/test01/data/5
+cp: omitting directory 'data_example/test01/data/0'
+cp: omitting directory 'data_example/test01/data/1'
+cp: omitting directory 'data_example/test01/data/2'
+cp: omitting directory 'data_example/test01/data/3'
+cp: omitting directory 'data_example/test01/data/4'
+cp: omitting directory 'data_example/test01/data/5'
+command: rm data_example/test01/data/scan*
+
+
+----------------------- View Planning Iteration 5----------------
+------------------------------- Positioning ---------------
+Moving to: 
+Robot Configuration: 0.176888 -0.939215 0.395744 1.75695 -0.298677 0  
+
+Sensor Pose: x:0.176888  y:-0.939215  z:0.395744		  yaw(z):1.75695  pitch(y):-0.298677  roll(x):0
+Sesor Orientation in deg: 100.666 -17.1129 0
+Occupied:0 	Unknown:0 	Utility:6.70886e-05
+FreeFlyer moving to 
+x: 0.176888mts
+y: -0.939215mts
+z: 0.395744mts
+yaw: 1.75695 = 100.666
+pitch: -0.298677 = -17.1129
+roll: 0 = 0
+-------------------------------- Scanning ------------------------
+Reconstructor: take scan
+Reading double coordinates from data_example/test01/data/current_scan.dat
+25344 readed points.
+25344 readed points.
+Robot sensor: obtained points from sensor: 25344
+[4,4]((-0.176888,-0.982723,0.0544615,0.176888),(0.939215,-0.185082,-0.289172,-0.939215),(0.294256,0,0.955727,0.395744),(0,0,0,1))
+[4,4]((6.12323e-17,6.12323e-17,1,0),(-1,3.7494e-33,6.12323e-17,0),(-0,-1,6.12323e-17,0),(0,0,0,1))
+Converted origin: (0.176888,-0.939215,0.395744)
+Robot sensor: scan performed
+Reconstructor: save scan
+Saving last point cloud...
+25344 points to be saved.
+Last point cloud saved. data_example/test01/data/scan_6.dat
+Saving sensor trajectory. data_example/test01/data/scan_origin_6.dat
+Saved sensor trajectory. data_example/test01/data/scan_origin_6.dat
+data_example/test01/data/scan_origin_6.dat
+data_example/test01/data/scan_6.dat
+----------------------------- Model update ----------------------
+Updating octree with scan.
+done.
+Readed points: 25344
+done.
+Readed points: 1
+Octree update took 1.40 seconds to run.
+                                       Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+file to read: data_example/test01/data/object_pts.dat
+Reading double coordinates from data_example/test01/data/object_pts.dat
+24836 readed points.
+Reading double coordinates from data_example/test01/config/bunny_ref_smalltable_nobase.dat
+32497 readed points.
+Correspondences: 27555
+%84.7924
+unknown volume 0.015944
+----------------------- Planing Next Best View ------------------
+Evaluating candidate views
+Best View of List
+Robot Configuration: -0.176888 0.939215 0.984256 -1.38464 0.298677 0  
+
+Sensor Pose: x:-0.176888  y:0.939215  z:0.984256		  yaw(z):-1.38464  pitch(y):0.298677  roll(x):0
+Sesor Orientation in deg: -79.3341 17.1129 0
+Occupied:0 	Unknown:0 	Utility:3.84514e-05
+
+command: mkdir data_example/test01/data/6
+cp data_example/test01/data/* data_example/test01/data/6
+cp: omitting directory 'data_example/test01/data/0'
+cp: omitting directory 'data_example/test01/data/1'
+cp: omitting directory 'data_example/test01/data/2'
+cp: omitting directory 'data_example/test01/data/3'
+cp: omitting directory 'data_example/test01/data/4'
+cp: omitting directory 'data_example/test01/data/5'
+cp: omitting directory 'data_example/test01/data/6'
+command: rm data_example/test01/data/scan*
+
+
+----------------------- View Planning Iteration 6----------------
+------------------------------- Positioning ---------------
+Moving to: 
+Robot Configuration: -0.176888 0.939215 0.984256 -1.38464 0.298677 0  
+
+Sensor Pose: x:-0.176888  y:0.939215  z:0.984256		  yaw(z):-1.38464  pitch(y):0.298677  roll(x):0
+Sesor Orientation in deg: -79.3341 17.1129 0
+Occupied:0 	Unknown:0 	Utility:3.84514e-05
+FreeFlyer moving to 
+x: -0.176888mts
+y: 0.939215mts
+z: 0.984256mts
+yaw: -1.38464 = -79.3341
+pitch: 0.298677 = 17.1129
+roll: 0 = 0
+-------------------------------- Scanning ------------------------
+Reconstructor: take scan
+Reading double coordinates from data_example/test01/data/current_scan.dat
+25344 readed points.
+25344 readed points.
+Robot sensor: obtained points from sensor: 25344
+[4,4]((0.176888,0.982723,0.0544615,-0.176888),(-0.939215,0.185082,-0.289172,0.939215),(-0.294256,0,0.955727,0.984256),(0,0,0,1))
+[4,4]((6.12323e-17,6.12323e-17,1,0),(-1,3.7494e-33,6.12323e-17,0),(-0,-1,6.12323e-17,0),(0,0,0,1))
+Converted origin: (-0.176888,0.939215,0.984256)
+Robot sensor: scan performed
+Reconstructor: save scan
+Saving last point cloud...
+25344 points to be saved.
+Last point cloud saved. data_example/test01/data/scan_7.dat
+Saving sensor trajectory. data_example/test01/data/scan_origin_7.dat
+Saved sensor trajectory. data_example/test01/data/scan_origin_7.dat
+data_example/test01/data/scan_origin_7.dat
+data_example/test01/data/scan_7.dat
+----------------------------- Model update ----------------------
+Updating octree with scan.
+done.
+Readed points: 25344
+done.
+Readed points: 1
+Octree update took 1.11 seconds to run.
+                                       Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+file to read: data_example/test01/data/object_pts.dat
+Reading double coordinates from data_example/test01/data/object_pts.dat
+31246 readed points.
+Reading double coordinates from data_example/test01/config/bunny_ref_smalltable_nobase.dat
+32497 readed points.
+Correspondences: 28488
+%87.6635
+unknown volume 0.015784
+----------------------- Planing Next Best View ------------------
+Evaluating candidate views
+Best View of List
+Robot Configuration: -0.345864 -0.886928 0.383834 1.19898 -0.311163 0  
+
+Sensor Pose: x:-0.345864  y:-0.886928  z:0.383834		  yaw(z):1.19898  pitch(y):-0.311163  roll(x):0
+Sesor Orientation in deg: 68.6963 -17.8283 0
+Occupied:0 	Unknown:0 	Utility:3.63987e-05
+
+command: mkdir data_example/test01/data/7
+cp data_example/test01/data/* data_example/test01/data/7
+cp: omitting directory 'data_example/test01/data/0'
+cp: omitting directory 'data_example/test01/data/1'
+cp: omitting directory 'data_example/test01/data/2'
+cp: omitting directory 'data_example/test01/data/3'
+cp: omitting directory 'data_example/test01/data/4'
+cp: omitting directory 'data_example/test01/data/5'
+cp: omitting directory 'data_example/test01/data/6'
+cp: omitting directory 'data_example/test01/data/7'
+command: rm data_example/test01/data/scan*
+
+
+----------------------- View Planning Iteration 7----------------
+------------------------------- Positioning ---------------
+Moving to: 
+Robot Configuration: -0.345864 -0.886928 0.383834 1.19898 -0.311163 0  
+
+Sensor Pose: x:-0.345864  y:-0.886928  z:0.383834		  yaw(z):1.19898  pitch(y):-0.311163  roll(x):0
+Sesor Orientation in deg: 68.6963 -17.8283 0
+Occupied:0 	Unknown:0 	Utility:3.63987e-05
+FreeFlyer moving to 
+x: -0.345864mts
+y: -0.886928mts
+z: 0.383834mts
+yaw: 1.19898 = 68.6963
+pitch: -0.311163 = -17.8283
+roll: 0 = 0
+-------------------------------- Scanning ------------------------
+Reconstructor: take scan
+Reading double coordinates from data_example/test01/data/current_scan.dat
+25344 readed points.
+25344 readed points.
+Robot sensor: obtained points from sensor: 25344
+[4,4]((0.345864,-0.931668,-0.111233,-0.345864),(0.886928,0.363311,-0.285245,-0.886928),(0.306166,0,0.951978,0.383834),(0,0,0,1))
+[4,4]((6.12323e-17,6.12323e-17,1,0),(-1,3.7494e-33,6.12323e-17,0),(-0,-1,6.12323e-17,0),(0,0,0,1))
+Converted origin: (-0.345864,-0.886928,0.383834)
+Robot sensor: scan performed
+Reconstructor: save scan
+Saving last point cloud...
+25344 points to be saved.
+Last point cloud saved. data_example/test01/data/scan_8.dat
+Saving sensor trajectory. data_example/test01/data/scan_origin_8.dat
+Saved sensor trajectory. data_example/test01/data/scan_origin_8.dat
+data_example/test01/data/scan_origin_8.dat
+data_example/test01/data/scan_8.dat
+----------------------------- Model update ----------------------
+Updating octree with scan.
+done.
+Readed points: 25344
+done.
+Readed points: 1
+Octree update took 1.42 seconds to run.
+                                       Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+file to read: data_example/test01/data/object_pts.dat
+Reading double coordinates from data_example/test01/data/object_pts.dat
+35669 readed points.
+Reading double coordinates from data_example/test01/config/bunny_ref_smalltable_nobase.dat
+32497 readed points.
+Correspondences: 28684
+%88.2666
+unknown volume 0.015504
+----------------------- Planing Next Best View ------------------
+Evaluating candidate views
+Best View of List
+Robot Configuration: -0.57735 0.57735 0.11265 -0.785398 -0.61548 0  
+
+Sensor Pose: x:-0.57735  y:0.57735  z:0.11265		  yaw(z):-0.785398  pitch(y):-0.61548  roll(x):0
+Sesor Orientation in deg: -45 -35.2644 0
+Occupied:0 	Unknown:0 	Utility:4.138e-05
+
+command: mkdir data_example/test01/data/8
+cp data_example/test01/data/* data_example/test01/data/8
+cp: omitting directory 'data_example/test01/data/0'
+cp: omitting directory 'data_example/test01/data/1'
+cp: omitting directory 'data_example/test01/data/2'
+cp: omitting directory 'data_example/test01/data/3'
+cp: omitting directory 'data_example/test01/data/4'
+cp: omitting directory 'data_example/test01/data/5'
+cp: omitting directory 'data_example/test01/data/6'
+cp: omitting directory 'data_example/test01/data/7'
+cp: omitting directory 'data_example/test01/data/8'
+command: rm data_example/test01/data/scan*
+
+
+----------------------- View Planning Iteration 8----------------
+------------------------------- Positioning ---------------
+Moving to: 
+Robot Configuration: -0.57735 0.57735 0.11265 -0.785398 -0.61548 0  
+
+Sensor Pose: x:-0.57735  y:0.57735  z:0.11265		  yaw(z):-0.785398  pitch(y):-0.61548  roll(x):0
+Sesor Orientation in deg: -45 -35.2644 0
+Occupied:0 	Unknown:0 	Utility:4.138e-05
+FreeFlyer moving to 
+x: -0.57735mts
+y: 0.57735mts
+z: 0.11265mts
+yaw: -0.785398 = -45
+pitch: -0.61548 = -35.2644
+roll: 0 = 0
+-------------------------------- Scanning ------------------------
+Reconstructor: take scan
+Reading double coordinates from data_example/test01/data/current_scan.dat
+25344 readed points.
+25344 readed points.
+Robot sensor: obtained points from sensor: 25344
+[4,4]((0.57735,0.707107,-0.408248,-0.57735),(-0.57735,0.707107,0.408248,0.57735),(0.57735,0,0.816497,0.11265),(0,0,0,1))
+[4,4]((6.12323e-17,6.12323e-17,1,0),(-1,3.7494e-33,6.12323e-17,0),(-0,-1,6.12323e-17,0),(0,0,0,1))
+Converted origin: (-0.57735,0.57735,0.11265)
+Robot sensor: scan performed
+Reconstructor: save scan
+Saving last point cloud...
+25344 points to be saved.
+Last point cloud saved. data_example/test01/data/scan_9.dat
+Saving sensor trajectory. data_example/test01/data/scan_origin_9.dat
+Saved sensor trajectory. data_example/test01/data/scan_origin_9.dat
+data_example/test01/data/scan_origin_9.dat
+data_example/test01/data/scan_9.dat
+----------------------------- Model update ----------------------
+Updating octree with scan.
+done.
+Readed points: 25344
+done.
+Readed points: 1
+Octree update took 0.70 seconds to run.
+                                       Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+file to read: data_example/test01/data/object_pts.dat
+Reading double coordinates from data_example/test01/data/object_pts.dat
+35810 readed points.
+Reading double coordinates from data_example/test01/config/bunny_ref_smalltable_nobase.dat
+32497 readed points.
+Correspondences: 28705
+%88.3312
+unknown volume 0.015552
+----------------------- Planing Next Best View ------------------
+Evaluating candidate views
+Best View of List
+Robot Configuration: -0.886928 0.306166 1.03586 -0.332391 0.353159 0  
+
+Sensor Pose: x:-0.886928  y:0.306166  z:1.03586		  yaw(z):-0.332391  pitch(y):0.353159  roll(x):0
+Sesor Orientation in deg: -19.0446 20.2345 0
+Occupied:0 	Unknown:0 	Utility:8.31138e-06
+
+command: mkdir data_example/test01/data/9
+cp data_example/test01/data/* data_example/test01/data/9
+cp: omitting directory 'data_example/test01/data/0'
+cp: omitting directory 'data_example/test01/data/1'
+cp: omitting directory 'data_example/test01/data/2'
+cp: omitting directory 'data_example/test01/data/3'
+cp: omitting directory 'data_example/test01/data/4'
+cp: omitting directory 'data_example/test01/data/5'
+cp: omitting directory 'data_example/test01/data/6'
+cp: omitting directory 'data_example/test01/data/7'
+cp: omitting directory 'data_example/test01/data/8'
+cp: omitting directory 'data_example/test01/data/9'
+command: rm data_example/test01/data/scan*
+
+
+----------------------- View Planning Iteration 9----------------
+------------------------------- Positioning ---------------
+Moving to: 
+Robot Configuration: -0.886928 0.306166 1.03586 -0.332391 0.353159 0  
+
+Sensor Pose: x:-0.886928  y:0.306166  z:1.03586		  yaw(z):-0.332391  pitch(y):0.353159  roll(x):0
+Sesor Orientation in deg: -19.0446 20.2345 0
+Occupied:0 	Unknown:0 	Utility:8.31138e-06
+FreeFlyer moving to 
+x: -0.886928mts
+y: 0.306166mts
+z: 1.03586mts
+yaw: -0.332391 = -19.0446
+pitch: 0.353159 = 20.2345
+roll: 0 = 0
+-------------------------------- Scanning ------------------------
+Reconstructor: take scan
+Reading double coordinates from data_example/test01/data/current_scan.dat
+25344 readed points.
+25344 readed points.
+Robot sensor: obtained points from sensor: 25344
+[4,4]((0.886928,0.326304,0.326933,-0.886928),(-0.306166,0.945265,-0.112857,0.306166),(-0.345864,0,0.938285,1.03586),(0,0,0,1))
+[4,4]((6.12323e-17,6.12323e-17,1,0),(-1,3.7494e-33,6.12323e-17,0),(-0,-1,6.12323e-17,0),(0,0,0,1))
+Converted origin: (-0.886928,0.306166,1.03586)
+Robot sensor: scan performed
+Reconstructor: save scan
+Saving last point cloud...
+25344 points to be saved.
+Last point cloud saved. data_example/test01/data/scan_10.dat
+Saving sensor trajectory. data_example/test01/data/scan_origin_10.dat
+Saved sensor trajectory. data_example/test01/data/scan_origin_10.dat
+data_example/test01/data/scan_origin_10.dat
+data_example/test01/data/scan_10.dat
+----------------------------- Model update ----------------------
+Updating octree with scan.
+done.
+Readed points: 25344
+done.
+Readed points: 1
+Octree update took 1.07 seconds to run.
+                                       Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+file to read: data_example/test01/data/object_pts.dat
+Reading double coordinates from data_example/test01/data/object_pts.dat
+43842 readed points.
+Reading double coordinates from data_example/test01/config/bunny_ref_smalltable_nobase.dat
+32497 readed points.
+Correspondences: 29272
+%90.076
+unknown volume 0.015288
+----------------------- Planing Next Best View ------------------
+Evaluating candidate views
+Best View of List
+Robot Configuration: 0.816797 -0.559125 0.547796 2.54132 -0.142688 0  
+
+Sensor Pose: x:0.816797  y:-0.559125  z:0.547796		  yaw(z):2.54132  pitch(y):-0.142688  roll(x):0
+Sesor Orientation in deg: 145.607 -8.1754 0
+Occupied:0 	Unknown:0 	Utility:1.54526e-06
+
+command: mkdir data_example/test01/data/10
+cp data_example/test01/data/* data_example/test01/data/10
+cp: omitting directory 'data_example/test01/data/0'
+cp: omitting directory 'data_example/test01/data/1'
+cp: omitting directory 'data_example/test01/data/10'
+cp: omitting directory 'data_example/test01/data/2'
+cp: omitting directory 'data_example/test01/data/3'
+cp: omitting directory 'data_example/test01/data/4'
+cp: omitting directory 'data_example/test01/data/5'
+cp: omitting directory 'data_example/test01/data/6'
+cp: omitting directory 'data_example/test01/data/7'
+cp: omitting directory 'data_example/test01/data/8'
+cp: omitting directory 'data_example/test01/data/9'
+command: rm data_example/test01/data/scan*
+
+
+----------------------- View Planning Iteration 10----------------
+------------------------------- Positioning ---------------
+Moving to: 
+Robot Configuration: 0.816797 -0.559125 0.547796 2.54132 -0.142688 0  
+
+Sensor Pose: x:0.816797  y:-0.559125  z:0.547796		  yaw(z):2.54132  pitch(y):-0.142688  roll(x):0
+Sesor Orientation in deg: 145.607 -8.1754 0
+Occupied:0 	Unknown:0 	Utility:1.54526e-06
+FreeFlyer moving to 
+x: 0.816797mts
+y: -0.559125mts
+z: 0.547796mts
+yaw: 2.54132 = 145.607
+pitch: -0.142688 = -8.1754
+roll: 0 = 0
+-------------------------------- Scanning ------------------------
+Reconstructor: take scan
+Reading double coordinates from data_example/test01/data/current_scan.dat
+25344 readed points.
+25344 readed points.
+Robot sensor: obtained points from sensor: 25344
+[4,4]((-0.816797,-0.564866,0.117344,0.816797),(0.559125,-0.825183,-0.0803261,-0.559125),(0.142204,0,0.989837,0.547796),(0,0,0,1))
+[4,4]((6.12323e-17,6.12323e-17,1,0),(-1,3.7494e-33,6.12323e-17,0),(-0,-1,6.12323e-17,0),(0,0,0,1))
+Converted origin: (0.816797,-0.559125,0.547796)
+Robot sensor: scan performed
+Reconstructor: save scan
+Saving last point cloud...
+25344 points to be saved.
+Last point cloud saved. data_example/test01/data/scan_11.dat
+Saving sensor trajectory. data_example/test01/data/scan_origin_11.dat
+Saved sensor trajectory. data_example/test01/data/scan_origin_11.dat
+data_example/test01/data/scan_origin_11.dat
+data_example/test01/data/scan_11.dat
+----------------------------- Model update ----------------------
+Updating octree with scan.
+done.
+Readed points: 25344
+done.
+Readed points: 1
+Octree update took 1.26 seconds to run.
+                                       Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+file to read: data_example/test01/data/object_pts.dat
+Reading double coordinates from data_example/test01/data/object_pts.dat
+50290 readed points.
+Reading double coordinates from data_example/test01/config/bunny_ref_smalltable_nobase.dat
+32497 readed points.
+Correspondences: 29878
+%91.9408
+unknown volume 0.015208
+----------------------- Planing Next Best View ------------------
+Evaluating candidate views
+Best View of List
+Robot Configuration: 0.547076 0.706934 0.241722 -2.2294 -0.464838 0  
+
+Sensor Pose: x:0.547076  y:0.706934  z:0.241722		  yaw(z):-2.2294  pitch(y):-0.464838  roll(x):0
+Sesor Orientation in deg: -127.735 -26.6333 0
+Occupied:0 	Unknown:0 	Utility:4.83136e-07
+
+command: mkdir data_example/test01/data/11
+cp data_example/test01/data/* data_example/test01/data/11
+cp: omitting directory 'data_example/test01/data/0'
+cp: omitting directory 'data_example/test01/data/1'
+cp: omitting directory 'data_example/test01/data/10'
+cp: omitting directory 'data_example/test01/data/11'
+cp: omitting directory 'data_example/test01/data/2'
+cp: omitting directory 'data_example/test01/data/3'
+cp: omitting directory 'data_example/test01/data/4'
+cp: omitting directory 'data_example/test01/data/5'
+cp: omitting directory 'data_example/test01/data/6'
+cp: omitting directory 'data_example/test01/data/7'
+cp: omitting directory 'data_example/test01/data/8'
+cp: omitting directory 'data_example/test01/data/9'
+command: rm data_example/test01/data/scan*
+
+
+----------------------- View Planning Iteration 11----------------
+------------------------------- Positioning ---------------
+Moving to: 
+Robot Configuration: 0.547076 0.706934 0.241722 -2.2294 -0.464838 0  
+
+Sensor Pose: x:0.547076  y:0.706934  z:0.241722		  yaw(z):-2.2294  pitch(y):-0.464838  roll(x):0
+Sesor Orientation in deg: -127.735 -26.6333 0
+Occupied:0 	Unknown:0 	Utility:4.83136e-07
+FreeFlyer moving to 
+x: 0.547076mts
+y: 0.706934mts
+z: 0.241722mts
+yaw: -2.2294 = -127.735
+pitch: -0.464838 = -26.6333
+roll: 0 = 0
+-------------------------------- Scanning ------------------------
+Reconstructor: take scan
+Reading double coordinates from data_example/test01/data/current_scan.dat
+25344 readed points.
+25344 readed points.
+Robot sensor: obtained points from sensor: 25344
+[4,4]((-0.547076,0.790847,0.274352,0.547076),(-0.706934,-0.612014,0.354519,0.706934),(0.448278,0,0.893894,0.241722),(0,0,0,1))
+[4,4]((6.12323e-17,6.12323e-17,1,0),(-1,3.7494e-33,6.12323e-17,0),(-0,-1,6.12323e-17,0),(0,0,0,1))
+Converted origin: (0.547076,0.706934,0.241722)
+Robot sensor: scan performed
+Reconstructor: save scan
+Saving last point cloud...
+25344 points to be saved.
+Last point cloud saved. data_example/test01/data/scan_12.dat
+Saving sensor trajectory. data_example/test01/data/scan_origin_12.dat
+Saved sensor trajectory. data_example/test01/data/scan_origin_12.dat
+data_example/test01/data/scan_origin_12.dat
+data_example/test01/data/scan_12.dat
+----------------------------- Model update ----------------------
+Updating octree with scan.
+done.
+Readed points: 25344
+done.
+Readed points: 1
+Octree update took 0.93 seconds to run.
+                                       Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+file to read: data_example/test01/data/object_pts.dat
+Reading double coordinates from data_example/test01/data/object_pts.dat
+52951 readed points.
+Reading double coordinates from data_example/test01/config/bunny_ref_smalltable_nobase.dat
+32497 readed points.
+Correspondences: 29919
+%92.067
+unknown volume 0.015192
+----------------------- Planing Next Best View ------------------
+Evaluating candidate views
+Best View of List
+Robot Configuration: -0.762327 0.580467 0.403789 -0.650783 -0.29027 0  
+
+Sensor Pose: x:-0.762327  y:0.580467  z:0.403789		  yaw(z):-0.650783  pitch(y):-0.29027  roll(x):0
+Sesor Orientation in deg: -37.2871 -16.6312 0
+Occupied:0 	Unknown:0 	Utility:3.00337e-07
+
+command: mkdir data_example/test01/data/12
+cp data_example/test01/data/* data_example/test01/data/12
+cp: omitting directory 'data_example/test01/data/0'
+cp: omitting directory 'data_example/test01/data/1'
+cp: omitting directory 'data_example/test01/data/10'
+cp: omitting directory 'data_example/test01/data/11'
+cp: omitting directory 'data_example/test01/data/12'
+cp: omitting directory 'data_example/test01/data/2'
+cp: omitting directory 'data_example/test01/data/3'
+cp: omitting directory 'data_example/test01/data/4'
+cp: omitting directory 'data_example/test01/data/5'
+cp: omitting directory 'data_example/test01/data/6'
+cp: omitting directory 'data_example/test01/data/7'
+cp: omitting directory 'data_example/test01/data/8'
+cp: omitting directory 'data_example/test01/data/9'
+command: rm data_example/test01/data/scan*
+
+
+----------------------- View Planning Iteration 12----------------
+------------------------------- Positioning ---------------
+Moving to: 
+Robot Configuration: -0.762327 0.580467 0.403789 -0.650783 -0.29027 0  
+
+Sensor Pose: x:-0.762327  y:0.580467  z:0.403789		  yaw(z):-0.650783  pitch(y):-0.29027  roll(x):0
+Sesor Orientation in deg: -37.2871 -16.6312 0
+Occupied:0 	Unknown:0 	Utility:3.00337e-07
+FreeFlyer moving to 
+x: -0.762327mts
+y: 0.580467mts
+z: 0.403789mts
+yaw: -0.650783 = -37.2871
+pitch: -0.29027 = -16.6312
+roll: 0 = 0
+-------------------------------- Scanning ------------------------
+Reconstructor: take scan
+Reading double coordinates from data_example/test01/data/current_scan.dat
+25344 readed points.
+25344 readed points.
+Robot sensor: obtained points from sensor: 25344
+[4,4]((0.762327,0.60581,-0.227712,-0.762327),(-0.580467,0.79561,0.173389,0.580467),(0.286211,0,0.958167,0.403789),(0,0,0,1))
+[4,4]((6.12323e-17,6.12323e-17,1,0),(-1,3.7494e-33,6.12323e-17,0),(-0,-1,6.12323e-17,0),(0,0,0,1))
+Converted origin: (-0.762327,0.580467,0.403789)
+Robot sensor: scan performed
+Reconstructor: save scan
+Saving last point cloud...
+25344 points to be saved.
+Last point cloud saved. data_example/test01/data/scan_13.dat
+Saving sensor trajectory. data_example/test01/data/scan_origin_13.dat
+Saved sensor trajectory. data_example/test01/data/scan_origin_13.dat
+data_example/test01/data/scan_origin_13.dat
+data_example/test01/data/scan_13.dat
+----------------------------- Model update ----------------------
+Updating octree with scan.
+done.
+Readed points: 25344
+done.
+Readed points: 1
+Octree update took 1.30 seconds to run.
+                                       Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+file to read: data_example/test01/data/object_pts.dat
+Reading double coordinates from data_example/test01/data/object_pts.dat
+60269 readed points.
+Reading double coordinates from data_example/test01/config/bunny_ref_smalltable_nobase.dat
+32497 readed points.
+Correspondences: 30149
+%92.7747
+unknown volume 0.015144
+----------------------- Planing Next Best View ------------------
+Evaluating candidate views
+Best View of List
+Robot Configuration: -0.559125 -0.142204 1.5068 0.249052 0.955837 0  
+
+Sensor Pose: x:-0.559125  y:-0.142204  z:1.5068		  yaw(z):0.249052  pitch(y):0.955837  roll(x):0
+Sesor Orientation in deg: 14.2697 54.7654 0
+Occupied:0 	Unknown:0 	Utility:2.86837e-07
+
+command: mkdir data_example/test01/data/13
+cp data_example/test01/data/* data_example/test01/data/13
+cp: omitting directory 'data_example/test01/data/0'
+cp: omitting directory 'data_example/test01/data/1'
+cp: omitting directory 'data_example/test01/data/10'
+cp: omitting directory 'data_example/test01/data/11'
+cp: omitting directory 'data_example/test01/data/12'
+cp: omitting directory 'data_example/test01/data/13'
+cp: omitting directory 'data_example/test01/data/2'
+cp: omitting directory 'data_example/test01/data/3'
+cp: omitting directory 'data_example/test01/data/4'
+cp: omitting directory 'data_example/test01/data/5'
+cp: omitting directory 'data_example/test01/data/6'
+cp: omitting directory 'data_example/test01/data/7'
+cp: omitting directory 'data_example/test01/data/8'
+cp: omitting directory 'data_example/test01/data/9'
+command: rm data_example/test01/data/scan*
+Reconstruction finished
+Octomap: data_example/test01/data/partial_model_octree_color.ot saved
+Object VRML: data_example/test01/data/object_accumulated_points.wrl saved
+Object point cloud: data_example/test01/data/object_pts.dat saved
+Unknown voxels in BBx amouts was saved
+Views saved. File: data_example/test01/data/plan.dat
+Model saved, bye
+jellyfish@jellyfish:~/Softwares/vpl-master02$ 
+
